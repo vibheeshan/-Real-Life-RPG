@@ -115,3 +115,7 @@ MIT License — feel free to use and modify.
 ---
 
 > *"Consistency creates champions."*
+
+---
+
+> Built with love with the help of [CipherSchools](https://cipherschools.com) ❤️
