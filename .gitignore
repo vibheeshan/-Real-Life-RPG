@@ -30,3 +30,15 @@ npm-debug.log*
 yarn.lock
 pnpm-lock.yaml
 
+# Build / cache
+dist/
+out/
+coverage/
+.cache/
+
+# Sensitive / misc
+*.pem
+*.key
+*.crt
+*.env.local
+
