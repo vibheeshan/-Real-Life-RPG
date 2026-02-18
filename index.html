@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Real-Life RPG — Transform your daily habits into a gamified adventure. Level up your real life.">
+  <title>Real-Life RPG — Level Up Your Real Life</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <div id="bg-layer"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Back Button -->
+  <button class="nav-back" id="nav-back" onclick="app.goBack()">
+    ← Back
+  </button>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 1: WELCOME
+       ═══════════════════════════════════════════════════ -->
+  <section id="welcome-screen" class="screen active">
+    <div class="welcome-badge">⚔️</div>
+    <h1 class="heading-1">Real-Life RPG</h1>
+    <div class="tagline-rotator">
+      <span>Level Up Your Real Life.</span>
+      <span>Your Life Is The Game.</span>
+      <span>Grind XP. Defeat Distractions.</span>
+      <span>From Beginner to Legend.</span>
+    </div>
+    <div class="welcome-player-info" id="welcome-player-info" style="display:none;">
+      <span class="label" id="welcome-player-name"></span>
+      <span class="subtitle" id="welcome-player-level"></span>
+    </div>
+    <button class="btn-primary" id="welcome-btn" onclick="app.startGame()">
+      Enter Game Mode
+    </button>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 2: CHARACTER CREATION
+       ═══════════════════════════════════════════════════ -->
+  <section id="creation-screen" class="screen">
+    <h1 class="heading-1">Create Your Hero</h1>
+    <p class="subtitle">Every legend starts at Level 1.</p>
+
+    <input type="text" class="input-field" id="hero-name" placeholder="Enter your hero name…" maxlength="20" autocomplete="off">
+
+    <h2 class="heading-2" style="margin-top: var(--space-lg);">Choose Your Class</h2>
+
+    <div class="class-grid" id="class-grid">
+      <!-- Populated by JS -->
+    </div>
+
+    <button class="btn-primary" id="create-btn" onclick="app.createCharacter()" style="margin-top: var(--space-lg); opacity: 0.4; pointer-events: none;">
+      Begin Journey
+    </button>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 3: DASHBOARD
+       ═══════════════════════════════════════════════════ -->
+  <section id="dashboard-screen" class="screen">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="player-avatar" id="dash-avatar">📚</div>
+      <div class="player-meta">
+        <div class="player-name-level">
+          <h2 id="dash-name">Hero</h2>
+          <span class="level-badge" id="dash-level">LVL 1</span>
+        </div>
+        <div class="xp-bar-wrap">
+          <div class="xp-bar-track">
+            <div class="xp-bar-fill" id="dash-xp-fill" style="width: 0%"></div>
+          </div>
+          <div class="xp-text">
+            <span id="dash-xp-current">0 XP</span>
+            <span id="dash-xp-next">100 XP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="dashboard-grid">
+
+      <!-- Stats Panel -->
+      <div class="glass-card dashboard-panel">
+        <div class="panel-title">
+          <span>📊</span>
+          <h3 class="heading-3">Character Stats</h3>
+        </div>
+        <div class="stats-list" id="stats-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Today's Quests -->
+      <div class="glass-card dashboard-panel">
+        <div class="panel-title">
+          <span>📜</span>
+          <h3 class="heading-3">Daily Quests</h3>
+        </div>
+        <div class="quest-list" id="quest-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Action Grid -->
+    <div class="action-grid">
+      <button class="action-btn" onclick="app.showScreen('skilltree')">
+        <span class="action-icon">🌳</span>
+        <span class="action-label">Skill Tree</span>
+      </button>
+      <button class="action-btn" onclick="app.showScreen('worldmap')">
+        <span class="action-icon">🗺️</span>
+        <span class="action-label">World Map</span>
+      </button>
+      <button class="action-btn" onclick="app.showScreen('boss')">
+        <span class="action-icon">👹</span>
+        <span class="action-label">Boss Battle</span>
+      </button>
+      <button class="action-btn" onclick="app.showScreen('summary')">
+        <span class="action-icon">📈</span>
+        <span class="action-label">Day Summary</span>
+      </button>
+      <button class="action-btn" onclick="app.triggerDistraction()">
+        <span class="action-icon">⚡</span>
+        <span class="action-label">Simulate Distraction</span>
+      </button>
+      <button class="action-btn" onclick="app.resetGame()">
+        <span class="action-icon">🔄</span>
+        <span class="action-label">Reset Game</span>
+      </button>
+    </div>
+
+    <!-- Motivational -->
+    <div class="motivational-bar" id="motivational-msg">
+      "Small actions build great legends."
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 4: SKILL TREE
+       ═══════════════════════════════════════════════════ -->
+  <section id="skilltree-screen" class="screen">
+    <h1 class="heading-2">🌳 Skill Tree</h1>
+    <div class="skill-points-badge" id="skill-points-badge">0 Skill Points</div>
+    <div class="skill-tree-grid" id="skill-tree-grid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 5: WORLD MAP
+       ═══════════════════════════════════════════════════ -->
+  <section id="worldmap-screen" class="screen">
+    <h1 class="heading-2">🗺️ World Map</h1>
+    <p class="subtitle">Your path to greatness</p>
+    <div class="world-map-path" id="world-map-path">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 6: BOSS BATTLE
+       ═══════════════════════════════════════════════════ -->
+  <section id="boss-screen" class="screen">
+    <h1 class="heading-2">👹 Boss Battle</h1>
+    <p class="subtitle" id="boss-warning">⚠ A Boss Approaches: Final Exam</p>
+
+    <div class="boss-arena" id="boss-arena">
+      <div class="boss-sprite">🐉</div>
+      <div class="boss-name">Final Exam</div>
+      <p class="subtitle" style="margin-bottom: var(--space-lg);">This challenge tests your preparation.</p>
+
+      <div class="boss-hp-bar">
+        <div class="boss-hp-fill" id="boss-hp-fill" style="width: 100%"></div>
+      </div>
+
+      <div class="battle-status">
+        <div class="battle-stat">
+          <div class="label">Your Power</div>
+          <div class="value" id="boss-player-power" style="color: var(--blue);">50</div>
+        </div>
+        <div class="battle-stat">
+          <div class="label">Boss HP</div>
+          <div class="value" id="boss-hp-text" style="color: var(--crimson);">100</div>
+        </div>
+        <div class="battle-stat">
+          <div class="label">Readiness</div>
+          <div class="value" id="boss-readiness" style="color: var(--gold);">—</div>
+        </div>
+      </div>
+
+      <div class="battle-actions" id="battle-actions">
+        <button class="btn-danger" onclick="app.attackBoss()">⚔️ Attack</button>
+        <button class="btn-secondary" onclick="app.showScreen('dashboard')">Retreat</button>
+      </div>
+    </div>
+
+    <div id="boss-result-area"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SCREEN 7: END-OF-DAY SUMMARY
+       ═══════════════════════════════════════════════════ -->
+  <section id="summary-screen" class="screen">
+    <h1 class="heading-2">📈 Daily Performance Report</h1>
+    <p class="subtitle" id="summary-msg">Here's how you performed today.</p>
+
+    <div class="glass-card" style="width: 100%;">
+      <div class="summary-chart" id="summary-chart">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <div class="glass-card summary-breakdown" id="summary-breakdown">
+      <!-- Populated by JS -->
+    </div>
+
+    <p class="summary-final">"Consistency creates champions."</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       OVERLAY: DISTRACTION MONSTER
+       ═══════════════════════════════════════════════════ -->
+  <div class="distraction-overlay" id="distraction-overlay">
+    <div class="distraction-modal">
+      <div class="monster-sprite">👹</div>
+      <div class="monster-name" id="monster-name">Scroll Demon</div>
+      <p class="distraction-msg">A Distraction Monster has appeared!</p>
+      <div class="distraction-actions">
+        <button class="btn-success" onclick="app.fleeDistraction()">🏃 Flee (Resist)</button>
+        <button class="btn-danger" onclick="app.surrenderDistraction()">💀 Continue Browsing</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       OVERLAY: LEVEL UP
+       ═══════════════════════════════════════════════════ -->
+  <div class="levelup-overlay" id="levelup-overlay">
+    <div class="levelup-content">
+      <h1 class="heading-1">LEVEL UP!</h1>
+      <div class="levelup-level" id="levelup-level">Level 2</div>
+      <p class="subtitle">You are growing stronger. The path to mastery continues.</p>
+      <ul class="levelup-rewards">
+        <li>+5 Intelligence</li>
+        <li>+3 Focus</li>
+        <li>Skill Point Unlocked</li>
+      </ul>
+      <button class="btn-primary" onclick="app.dismissLevelUp()">Continue</button>
+    </div>
+  </div>
+
+
+  <!-- Scripts (order matters: content → state → systems → app) -->
+  <script src="js/content.js"></script>
+  <script src="js/gameState.js"></script>
+  <script src="js/quests.js"></script>
+  <script src="js/combat.js"></script>
+  <script src="js/skillTree.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

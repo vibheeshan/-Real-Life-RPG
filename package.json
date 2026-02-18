@@ -1,0 +1,16 @@
+{
+  "name": "real-life-rpg",
+  "version": "1.0.0",
+  "description": "Real-Life RPG — Transform your daily habits into a gamified adventure. Level up your real life.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": ["rpg", "productivity", "gamification", "electron", "desktop-app"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}
